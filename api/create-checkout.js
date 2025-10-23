@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'STRIPE_SECRET_KEY not configured. Please set environment variables in Vercel.' });
   }
 
-  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY.trim());
 
   try {
     // Create Stripe Checkout Session
