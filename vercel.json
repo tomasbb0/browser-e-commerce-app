@@ -1,16 +1,9 @@
 {
-  "version": 2,
   "buildCommand": "echo 'No build needed'",
-  "outputDirectory": ".",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/\\.netlify/functions/(.*)",
-      "dest": "/api/$1"
+      "source": "/.netlify/functions/:path*",
+      "destination": "/api/:path*"
     }
   ]
 }
