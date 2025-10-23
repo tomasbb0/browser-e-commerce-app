@@ -29,6 +29,7 @@ exports.handler = async (event, context) => {
       ],
       mode: 'subscription',
       automatic_tax: { enabled: true },
+      allow_promotion_codes: true, // Enable promo code input
       success_url: `${process.env.URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.URL}/`,
       metadata: {
