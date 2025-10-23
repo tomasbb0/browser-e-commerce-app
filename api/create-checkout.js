@@ -1,19 +1,16 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async (event, context) => {
+module.exports = async (req, res) => {
   // Only allow POST
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { email } = JSON.parse(event.body);
+  const { email } = req.body;
   const priceId = process.env.STRIPE_PRICE_ID;
 
   if (!email || !priceId) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: 'Email and priceId are required' }),
-    };
+    return res.status(400).json({ error: 'Email and priceId are required' });
   }
 
   try {
@@ -37,18 +34,9 @@ exports.handler = async (event, context) => {
       },
     });
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ sessionId: session.id }),
-    };
+    return res.status(200).json({ sessionId: session.id });
   } catch (error) {
     console.error('Stripe error:', error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to create checkout session' }),
-    };
+    return res.status(500).json({ error: 'Failed to create checkout session' });
   }
 };
