@@ -496,3 +496,23 @@ function selectPlan(plan) {
         alert('You are already on the Free plan!');
     }
 }
+/* Override upgradeToPremium to use live Stripe checkout */
+async function upgradeToPremium() {
+  try {
+    const response = await fetch('/.netlify/functions/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentUser.email })
+    });
+    if (response.ok) {
+      const { sessionId } = await response.json();
+      await stripe.redirectToCheckout({ sessionId });
+    } else {
+      alert('There was an error creating the checkout session. Please try again later.');
+    }
+  } catch (error) {
+    console.error('Upgrade failed:', error);
+    alert('An unexpected error occurred. Please try again later.');
+  }
+}
+
