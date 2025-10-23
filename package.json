@@ -1,0 +1,27 @@
+{
+  "name": "browser-tool-finder",
+  "version": "1.0.0",
+  "description": "Browser Tool Finder - Premium quiz application with Stripe integration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": [
+    "browser",
+    "tools",
+    "quiz",
+    "saas",
+    "stripe"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.11.3",
+    "stripe": "^14.9.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.10.1"
+  }
+}
