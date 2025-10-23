@@ -6,6 +6,8 @@ module.exports = async (req, res) => {
 
   // Debug: Log environment variables
   console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
+  console.log('STRIPE_SECRET_KEY first 10 chars:', JSON.stringify(process.env.STRIPE_SECRET_KEY?.substring(0, 10)));
+  console.log('STRIPE_SECRET_KEY length:', process.env.STRIPE_SECRET_KEY?.length);
   console.log('STRIPE_PRICE_ID:', process.env.STRIPE_PRICE_ID);
   
   const { email } = req.body;

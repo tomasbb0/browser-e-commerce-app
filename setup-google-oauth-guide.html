@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Guide - Fix Google OAuth</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .guide-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.95;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .step {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .step h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .code-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-box code {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+        }
+
+        .link-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px 10px 10px 0;
+        }
+
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .warning strong {
+            color: #856404;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success strong {
+            color: #155724;
+        }
+
+        .url-highlight {
+            background: #fff3cd;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px 0;
+            padding-left: 35px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            border-radius: 0 0 20px 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <h1>🔧 Fix Google OAuth Authorization Error</h1>
+            <p>Follow these steps to authorize your Vercel domain for Google Sign-In</p>
+        </div>
+
+        <div class="content">
+            <div class="warning">
+                <strong>⚠️ Important:</strong> Your Vercel URL needs to be added to Google Cloud Console's authorized domains. This is a one-time setup!
+            </div>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <h2>Find Your Vercel URL</h2>
+                <p><strong>What you need to do:</strong></p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>Go to your Vercel app tab in your browser</li>
+                    <li>Look at the address bar at the very top of your browser</li>
+                    <li>You'll see a URL that looks like: <code style="background: #fff3cd; padding: 2px 6px; border-radius: 3px;">https://browser-e-commerce-app-xxxxx.vercel.app</code></li>
+                    <li>Copy the ENTIRE URL including the <code>https://</code> part</li>
+                    <li>Paste it in the box below:</li>
+                </ol>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #333;">
+                        📝 Paste Your Vercel URL Here:
+                    </label>
+                    <input 
+                        type="text" 
+                        id="vercel-url-input" 
+                        placeholder="https://your-project-name.vercel.app"
+                        style="width: 100%; padding: 15px; border: 2px solid #667eea; border-radius: 8px; font-size: 1em; font-family: 'Courier New', monospace;"
+                        oninput="updateAllUrls(this.value)"
+                    >
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                        💡 Tip: Press Cmd+L (Mac) or Ctrl+L (Windows) in your Vercel tab to highlight the URL, then Cmd+C or Ctrl+C to copy it
+                    </p>
+                </div>
+
+                <div class="success" id="url-saved" style="display: none;">
+                    <strong>✅ Perfect!</strong> Your URL has been saved and will be automatically filled in all the steps below!
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h2>Open Google Cloud Console</h2>
+                <p><strong>What you need to do:</strong></p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>Click the blue button below</li>
+                    <li>A new tab will open with Google Cloud Console</li>
+                    <li>You might need to sign in with your Google account (use the same account you used to create the OAuth credentials)</li>
+                    <li>Keep this guide tab open - you'll need to come back here!</li>
+                </ol>
+                
+                <a href="https://console.cloud.google.com/apis/credentials" target="_blank" class="link-button">
+                    🔗 Open Google Cloud Console
+                </a>
+
+                <div style="margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 5px solid #2196f3;">
+                    <strong>📌 Important:</strong> Don't close this guide! You'll need to switch back and forth between this page and Google Cloud Console.
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h2>Select Your Project</h2>
+                <p><strong>What you need to do:</strong></p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>Look at the VERY TOP of the Google Cloud Console page</li>
+                    <li>You'll see the Google Cloud logo on the left, and next to it there's a dropdown that shows your current project name</li>
+                    <li>Click on that dropdown (it might say "My Project" or something similar)</li>
+                    <li>A modal/popup will appear showing all your projects</li>
+                    <li>Select the project you created for this app (the one where you set up Google Sign-In)</li>
+                </ol>
+
+                <div style="margin: 15px 0; padding: 20px; background: #f0f0f0; border-radius: 10px;">
+                    <strong>� Visual Guide:</strong>
+                    <p style="margin-top: 10px;">The project dropdown looks like this:</p>
+                    <div style="margin: 10px 0; padding: 10px; background: white; border: 2px dashed #667eea; border-radius: 5px; text-align: center;">
+                        <span style="color: #667eea;">☰ Google Cloud</span> <strong style="margin-left: 20px; padding: 8px 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 5px;">My Project ▼</strong>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>❓ Can't find your project?</strong><br>
+                    Look for any project name that you recognize or that was recently created. If you only have one project, that's probably the one!
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h2>Find Your OAuth 2.0 Client</h2>
+                <p><strong>What you need to do:</strong></p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>You should now be on the "Credentials" page</li>
+                    <li>Scroll down until you see a section called <strong>"OAuth 2.0 Client IDs"</strong></li>
+                    <li>In that section, you'll see a table with your OAuth clients listed</li>
+                    <li>Find the one you created for this app (it might be called "Web client" or have a custom name you gave it)</li>
+                    <li><strong>Click on the NAME</strong> of the OAuth client (the blue/underlined text, NOT the pencil icon)</li>
+                </ol>
+
+                <div style="margin: 15px 0; padding: 20px; background: #f0f0f0; border-radius: 10px;">
+                    <strong>🔍 What it looks like:</strong>
+                    <p style="margin-top: 10px;">The OAuth 2.0 Client IDs section has a table like this:</p>
+                    <div style="margin: 10px 0; padding: 15px; background: white; border-radius: 5px;">
+                        <div style="border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; color: #666;">
+                            Name &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Type &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Creation date
+                        </div>
+                        <div style="padding: 10px 0;">
+                            <span style="color: #1a73e8; text-decoration: underline; cursor: pointer;">👈 Click here → Web client 1</span> &nbsp;&nbsp;| &nbsp;&nbsp; Web application &nbsp;&nbsp;| &nbsp;&nbsp; Oct 23, 2025
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> Make sure you click on the NAME (the blue text), not the edit/pencil icon on the right!
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <h2>Add Authorized JavaScript Origins</h2>
+                <p><strong>What you need to do:</strong></p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>After clicking your OAuth client name, a new page will open with details</li>
+                    <li>Scroll down until you see <strong>"Authorized JavaScript origins"</strong> section</li>
+                    <li>Click the blue button that says <strong>"+ ADD URI"</strong></li>
+                    <li>A new text box will appear</li>
+                    <li>Copy the URL from the box below (click the green Copy button)</li>
+                    <li>Paste it into the text box in Google Cloud Console</li>
+                    <li>Press Enter or click outside the box to confirm</li>
+                </ol>
+
+                <div style="margin: 20px 0;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #333; font-size: 1.1em;">
+                        📋 Your URL to Copy:
+                    </label>
+                    <div class="code-box">
+                        <button class="copy-btn" onclick="copyOriginUrl()">📋 Copy This URL</button>
+                        <code id="origin-url" style="font-size: 1.1em; font-weight: bold; color: #4ade80;">https://your-project.vercel.app</code>
+                    </div>
+                </div>
+
+                <div style="margin: 15px 0; padding: 20px; background: #f0f0f0; border-radius: 10px;">
+                    <strong>🔍 Visual Guide - Where to paste:</strong>
+                    <p style="margin-top: 10px;">Look for this in Google Cloud Console:</p>
+                    <div style="margin: 10px 0; padding: 15px; background: white; border-radius: 5px; border: 2px solid #667eea;">
+                        <div style="font-weight: bold; margin-bottom: 10px; color: #333;">Authorized JavaScript origins</div>
+                        <div style="color: #666; font-size: 0.9em; margin-bottom: 10px;">For use with requests from a browser</div>
+                        <button style="background: #1a73e8; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">+ ADD URI</button>
+                        <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;">
+                            👈 After clicking "+ ADD URI", paste your URL here
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ IMPORTANT RULES:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                        <li><strong>Include https://</strong> at the start</li>
+                        <li><strong>NO trailing slash</strong> at the end (❌ wrong: https://site.com/)</li>
+                        <li><strong>NO paths</strong> after the domain (❌ wrong: https://site.com/login)</li>
+                        <li><strong>Just the domain</strong> (✅ correct: https://site.com)</li>
+                    </ul>
+                </div>
+
+                <div class="success">
+                    <strong>✅ Correct format:</strong> https://browser-e-commerce-app-abc123.vercel.app
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">6</div>
+                <h2>Add Authorized Redirect URIs (Optional)</h2>
+                <p>If there's an <strong>"Authorized redirect URIs"</strong> section, add the same URL there too.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">7</div>
+                <h2>Save Changes</h2>
+                <p>Scroll down and click the <strong>"SAVE"</strong> button at the bottom of the page.</p>
+                <div class="success">
+                    <strong>✅ Almost Done!</strong> Google will process your changes in a few seconds.
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">8</div>
+                <h2>Test Your App</h2>
+                <p>Wait about 10-30 seconds for Google's changes to propagate, then:</p>
+                <ul class="checklist">
+                    <li>Go back to your Vercel app</li>
+                    <li>Refresh the page (Cmd/Ctrl + R)</li>
+                    <li>Try clicking "Continue with Google" again</li>
+                    <li>You should now be able to sign in!</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <h3 style="margin-bottom: 10px;">🎉 Success Checklist</h3>
+                <p>After completing these steps, you should be able to:</p>
+                <ul class="checklist">
+                    <li>Sign in with Google successfully</li>
+                    <li>Click "Upgrade to Premium"</li>
+                    <li>See the Stripe checkout page</li>
+                    <li>Enter promo code: <span class="url-highlight">FREEMONTH</span></li>
+                    <li>Get your first month free!</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h3 style="margin-bottom: 10px;">🔐 Still Having Issues?</h3>
+                <p><strong>Alternative Solution:</strong> If you just want to test payments quickly, you can temporarily bypass Google login:</p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Open browser console (F12)</li>
+                    <li>Type: <code style="background: #2d2d2d; color: #f8f8f2; padding: 2px 8px; border-radius: 4px;">localStorage.setItem('testMode', 'true')</code></li>
+                    <li>Refresh the page</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Need more help? Check the documentation or contact support.</p>
+            <a href="https://developers.google.com/identity/protocols/oauth2" target="_blank" class="link-button">
+                📚 Google OAuth Docs
+            </a>
+            <a href="https://vercel.com/docs" target="_blank" class="link-button">
+                📖 Vercel Docs
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let savedUrl = '';
+
+        function copyToClipboard(button, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✅ Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function updateAllUrls(url) {
+            // Clean the URL - remove trailing slash if present
+            url = url.trim();
+            if (url.endsWith('/')) {
+                url = url.slice(0, -1);
+            }
+
+            savedUrl = url;
+
+            // Update the display in step 5
+            const originUrlElement = document.getElementById('origin-url');
+            if (originUrlElement) {
+                originUrlElement.textContent = url || 'https://your-project.vercel.app';
+            }
+
+            // Show success message if URL looks valid
+            const successBox = document.getElementById('url-saved');
+            if (url.startsWith('https://') && url.includes('vercel.app')) {
+                successBox.style.display = 'block';
+                originUrlElement.style.color = '#4ade80';
+            } else if (url.length > 0) {
+                successBox.style.display = 'none';
+                originUrlElement.style.color = '#fbbf24';
+            } else {
+                successBox.style.display = 'none';
+                originUrlElement.style.color = '#9ca3af';
+            }
+        }
+
+        function copyOriginUrl() {
+            const url = savedUrl || document.getElementById('origin-url').textContent;
+            const button = event.target;
+            
+            if (url === 'https://your-project.vercel.app') {
+                alert('⚠️ Please paste your Vercel URL in Step 1 first!');
+                // Scroll to step 1
+                document.getElementById('vercel-url-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document.getElementById('vercel-url-input').focus();
+                return;
+            }
+
+            navigator.clipboard.writeText(url).then(() => {
+                button.textContent = '✅ Copied!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = '📋 Copy This URL';
+                    button.style.background = '#667eea';
+                }, 2000);
+            });
+        }
+
+        // Auto-detect URL if opened from Vercel
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.href.includes('vercel.app')) {
+                const currentUrl = window.location.origin;
+                document.getElementById('vercel-url-input').value = currentUrl;
+                updateAllUrls(currentUrl);
+            }
+        });
+    </script>
+</body>
+</html>
