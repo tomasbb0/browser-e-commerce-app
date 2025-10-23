@@ -7,8 +7,8 @@ let currentUser = {
     quizzesTaken: 0
 };
 
-// Stripe Configuration (Replace with your actual Stripe publishable key)
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_KEY_HERE';
+// Stripe Configuration
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SLBvn1Y5BC1HX1Jwkrsmc6EEFslJ9XhEtv4WKWOk5uDSFr252AaCCCbRAoTW6B6jmbFMeeHCLohuPcIaQz2CCX900z7P595tW';
 const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
 // Google Sign-In Handler
