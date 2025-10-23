@@ -1,17 +1,29 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 module.exports = async (req, res) => {
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+  // Debug: Log environment variables
+  console.log('STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY);
+  console.log('STRIPE_PRICE_ID:', process.env.STRIPE_PRICE_ID);
+  
   const { email } = req.body;
   const priceId = process.env.STRIPE_PRICE_ID;
 
-  if (!email || !priceId) {
-    return res.status(400).json({ error: 'Email and priceId are required' });
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
   }
+
+  if (!priceId) {
+    return res.status(400).json({ error: 'STRIPE_PRICE_ID not configured. Please set environment variables in Vercel.' });
+  }
+
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(500).json({ error: 'STRIPE_SECRET_KEY not configured. Please set environment variables in Vercel.' });
+  }
+
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
   try {
     // Create Stripe Checkout Session
