@@ -8,7 +8,7 @@ let currentUser = {
 };
 
 // Stripe Configuration
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SLBvn1Y5BC1HX1Jwkrsmc6EEFslJ9XhEtv4WKWOk5uDSFr252AaCCCbRAoTW6B6jmbFMeeHCLohuPcIaQz2CCX900z7P595tW';
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SLBve02TjBox8MGrx48aTu0Qn4GMn160GP9D9tb13CGYgGdm4R29aU2kRMyAjoIcn2UlLOyIcGU4aDvPQavB7sE00As41VINr';
 const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
 // Google Sign-In Handler
@@ -504,11 +504,15 @@ async function upgradeToPremium() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: currentUser.email })
     });
+    
     if (response.ok) {
       const { sessionId } = await response.json();
       await stripe.redirectToCheckout({ sessionId });
     } else {
-      alert('There was an error creating the checkout session. Please try again later.');
+      // Get detailed error from response
+      const errorData = await response.json();
+      console.error('Checkout creation failed:', errorData);
+      alert(`Error: ${errorData.message || errorData.error}\n\nType: ${errorData.type || 'Unknown'}\nCode: ${errorData.code || 'Unknown'}\n\nCheck console for more details.`);
     }
   } catch (error) {
     console.error('Upgrade failed:', error);
