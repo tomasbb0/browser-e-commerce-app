@@ -4,9 +4,9 @@
   "description": "Browser Tool Finder - Premium quiz application with Stripe integration",
   "main": "index.html",
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "vercel dev",
     "build": "echo 'No build step required'",
-    "deploy": "netlify deploy --prod"
+    "deploy": "vercel --prod"
   },
   "keywords": [
     "browser",
@@ -23,6 +23,6 @@
     "stripe": "^14.9.0"
   },
   "devDependencies": {
-    "netlify-cli": "^17.10.1"
+    "vercel": "latest"
   }
 }

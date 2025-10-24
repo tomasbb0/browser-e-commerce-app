@@ -52,7 +52,7 @@ function parseJwt(token) {
 // Load user data from database
 async function loadUserData() {
     try {
-        const response = await fetch('/.netlify/functions/user-data', {
+        const response = await fetch('/api/user-data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: currentUser.email })
@@ -75,7 +75,7 @@ async function loadUserData() {
 // Save user data to database
 async function saveUserData() {
     try {
-        await fetch('/.netlify/functions/save-user-data', {
+        await fetch('/api/save-user-data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(currentUser)
@@ -156,12 +156,12 @@ function showSection(section) {
 // Upgrade to Premium
 async function upgradeToPremium() {
     try {
-        const response = await fetch('/.netlify/functions/create-checkout', {
+        const response = await fetch('/api/create-checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                email: currentUser.email,
-                priceId: 'price_YOUR_STRIPE_PRICE_ID'
+                email: currentUser.email
+                // Price ID is set in the backend environment variable
             })
         });
 
@@ -514,7 +514,7 @@ async function upgradeToPremium() {
     console.log('[CLIENT] Starting upgrade process...');
     console.log('[CLIENT] User email:', currentUser.email);
     
-    const response = await fetch('/.netlify/functions/create-checkout', {
+    const response = await fetch('/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: currentUser.email })
