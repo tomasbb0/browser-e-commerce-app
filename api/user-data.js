@@ -1,5 +1,33 @@
 const { Pool } = require('pg');
 
+/**
+ * API endpoint to fetch user data from the database
+ * 
+ * @description Retrieves user information including subscription status, saved quiz results,
+ * and total quizzes taken. Creates a new user record if one doesn't exist.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.email - User's email address
+ * @param {Object} res - Express response object
+ * 
+ * @returns {Object} JSON response containing:
+ *   - subscription {string} - User's subscription tier ('free' or 'premium')
+ *   - savedResults {Array} - Array of saved quiz results
+ *   - quizzesTaken {number} - Total number of quizzes completed
+ * 
+ * @example
+ * // Request
+ * POST /api/user-data
+ * { "email": "user@example.com" }
+ * 
+ * // Response
+ * {
+ *   "subscription": "free",
+ *   "savedResults": [],
+ *   "quizzesTaken": 0
+ * }
+ */
 module.exports = async (req, res) => {
   // Only allow POST
   if (req.method !== 'POST') {

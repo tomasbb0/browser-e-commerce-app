@@ -1,3 +1,30 @@
+/**
+ * API endpoint to create a Stripe Checkout session for premium subscription
+ * 
+ * @description Creates a Stripe Checkout session that allows users to upgrade to premium.
+ * Handles promo code application and redirects to Stripe's hosted checkout page.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.email - User's email address (required)
+ * @param {Object} res - Express response object
+ * 
+ * @returns {Object} JSON response containing:
+ *   - sessionId {string} - Stripe Checkout session ID for redirect
+ * 
+ * @throws {400} If email is missing
+ * @throws {500} If Stripe configuration is invalid
+ * 
+ * @example
+ * // Request
+ * POST /api/create-checkout
+ * { "email": "user@example.com" }
+ * 
+ * // Response
+ * { "sessionId": "cs_test_..." }
+ * 
+ * @see {@link https://stripe.com/docs/api/checkout/sessions|Stripe Checkout Sessions}
+ */
 module.exports = async (req, res) => {
   // Only allow POST
   if (req.method !== 'POST') {

@@ -1,0 +1,167 @@
+# CodeRabbit Configuration
+# Learn more: https://docs.coderabbit.ai/guides/configure-coderabbit
+
+# Language settings
+language: en-US
+
+# Review settings
+reviews:
+  # Review level: 'detailed' or 'concise'
+  level: detailed
+  
+  # Review tone: 'professional' or 'casual'
+  tone: professional
+  
+  # Auto-review settings
+  auto_review:
+    enabled: true
+    
+    # Auto-approve simple changes (typos, formatting)
+    auto_approve:
+      enabled: false  # Set to true if you want auto-approval of minor changes
+      
+  # What to review
+  scope:
+    # Review added/modified files
+    include:
+      - "**/*.js"
+      - "**/*.html"
+      - "**/*.css"
+      - "**/*.md"
+      - "**/*.json"
+      - "**/*.yaml"
+      - "**/*.yml"
+    
+    # Skip these paths
+    exclude:
+      - "node_modules/**"
+      - "package-lock.json"
+      - ".env"
+      - ".env.*"
+      - "dist/**"
+      - "build/**"
+      - ".vercel/**"
+      - ".netlify/**"
+
+# Review focus areas
+checks:
+  # Code quality
+  code_quality:
+    enabled: true
+    
+  # Security issues
+  security:
+    enabled: true
+    
+  # Performance issues
+  performance:
+    enabled: true
+    
+  # Best practices
+  best_practices:
+    enabled: true
+    
+  # Documentation
+  documentation:
+    enabled: true
+    
+  # Testing
+  testing:
+    enabled: true
+
+# Comment settings
+comments:
+  # Suggest improvements
+  suggestions:
+    enabled: true
+    
+  # Ask questions for clarification
+  questions:
+    enabled: true
+    
+  # Praise good code
+  praise:
+    enabled: true
+    
+  # Group related comments
+  group_similar:
+    enabled: true
+
+# Learning from feedback
+learning:
+  # Learn from your responses to improve reviews
+  enabled: true
+
+# Integration settings
+integrations:
+  # GitHub settings
+  github:
+    # Post review summary
+    summary:
+      enabled: true
+      
+    # Post individual line comments
+    line_comments:
+      enabled: true
+      
+    # Post suggestions as GitHub suggestions (can be committed directly)
+    suggestions:
+      enabled: true
+
+# Custom rules (optional)
+rules:
+  # Enforce specific patterns
+  patterns:
+    # Example: Ensure console.logs are removed in production code
+    - pattern: "console\\.log"
+      message: "Consider using proper logging or removing console.log statements"
+      severity: warning
+      files:
+        include:
+          - "**/*.js"
+        exclude:
+          - "**/app.js"  # Allow in app.js for debugging
+          
+    # Example: Check for TODO comments
+    - pattern: "TODO|FIXME"
+      message: "Consider creating a GitHub issue for this TODO"
+      severity: info
+
+# Path-specific settings
+paths:
+  # API functions - focus on security and error handling
+  "api/**/*.js":
+    focus:
+      - security
+      - error_handling
+      - async_patterns
+      
+  # Frontend files - focus on UX and performance
+  "*.html":
+    focus:
+      - accessibility
+      - seo
+      - performance
+      
+  "*.js":
+    focus:
+      - code_quality
+      - best_practices
+      
+  # Documentation - focus on clarity
+  "**/*.md":
+    focus:
+      - documentation
+      - clarity
+
+# Notification settings
+notifications:
+  # When to notify
+  on:
+    - review_complete
+    - new_comments
+    - pr_changes
+    
+# Early access features
+early_access:
+  enabled: true

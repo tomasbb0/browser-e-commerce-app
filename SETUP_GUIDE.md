@@ -1,4 +1,14 @@
-# Quick Setup Guide for Vercel Environment Variables
+# Quick Setup Guide for Browser Tool Finder
+
+> 🚀 **Currently deployed on Vercel** - This guide shows you how to deploy your own instance!
+
+## 📋 Prerequisites
+
+Before you begin, make sure you have:
+- A [Vercel account](https://vercel.com) (recommended) or [Netlify account](https://netlify.com)
+- A [Stripe account](https://stripe.com) (test mode is fine)
+- A [Neon PostgreSQL database](https://neon.tech)
+- A [Google Cloud account](https://console.cloud.google.com) for OAuth
 
 ## Recommended: Deploy with Vercel
 
