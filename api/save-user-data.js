@@ -1,5 +1,39 @@
 const { Pool } = require('pg');
 
+/**
+ * API endpoint to save or update user data in the database
+ * 
+ * @description Saves user information including subscription status, quiz results, and quiz count.
+ * Uses UPSERT logic - creates new user if doesn't exist, updates existing user otherwise.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body
+ * @param {string} req.body.email - User's email address (required)
+ * @param {string} req.body.subscription - Subscription tier ('free' or 'premium')
+ * @param {Array} req.body.savedResults - Array of saved quiz results
+ * @param {number} req.body.quizzesTaken - Total number of quizzes completed
+ * @param {Object} res - Express response object
+ * 
+ * @returns {Object} JSON response containing:
+ *   - success {boolean} - Whether the operation succeeded
+ *   - message {string} - Success/error message
+ * 
+ * @example
+ * // Request
+ * POST /api/save-user-data
+ * {
+ *   "email": "user@example.com",
+ *   "subscription": "premium",
+ *   "savedResults": [{...}],
+ *   "quizzesTaken": 5
+ * }
+ * 
+ * // Response
+ * {
+ *   "success": true,
+ *   "message": "User data saved successfully"
+ * }
+ */
 module.exports = async (req, res) => {
   // Only allow POST
   if (req.method !== 'POST') {

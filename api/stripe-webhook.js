@@ -1,5 +1,33 @@
 const { Pool } = require('pg');
 
+/**
+ * Stripe webhook handler for payment events
+ * 
+ * @description Handles Stripe webhook events for subscription lifecycle management.
+ * Automatically upgrades users to premium on successful payment and downgrades on cancellation.
+ * Uses webhook signatures for security verification.
+ * 
+ * @param {Object} req - Express request object
+ * @param {string} req.headers['stripe-signature'] - Stripe signature for verification
+ * @param {Object} req.body - Raw webhook payload from Stripe
+ * @param {Object} res - Express response object
+ * 
+ * @returns {Object} JSON response confirming webhook receipt
+ * 
+ * @fires checkout.session.completed - Upgrades user to premium
+ * @fires customer.subscription.deleted - Downgrades user to free
+ * 
+ * @throws {400} If webhook signature verification fails
+ * @throws {500} If database update fails
+ * 
+ * @example
+ * // Stripe sends this automatically when events occur
+ * POST /api/stripe-webhook
+ * Headers: { 'stripe-signature': 't=...,v1=...' }
+ * Body: { type: 'checkout.session.completed', data: {...} }
+ * 
+ * @see {@link https://stripe.com/docs/webhooks|Stripe Webhooks Documentation}
+ */
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
