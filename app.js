@@ -499,24 +499,41 @@ function selectPlan(plan) {
 /* Override upgradeToPremium to use live Stripe checkout */
 async function upgradeToPremium() {
   try {
+    console.log('[CLIENT] Starting upgrade process...');
+    console.log('[CLIENT] User email:', currentUser.email);
+    
     const response = await fetch('/.netlify/functions/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: currentUser.email })
     });
     
+    console.log('[CLIENT] Response status:', response.status);
+    console.log('[CLIENT] Response ok:', response.ok);
+    
     if (response.ok) {
-      const { sessionId } = await response.json();
-      await stripe.redirectToCheckout({ sessionId });
+      const data = await response.json();
+      console.log('[CLIENT] Got session data:', data);
+      console.log('[CLIENT] Session ID:', data.sessionId);
+      console.log('[CLIENT] Redirecting to Stripe checkout...');
+      
+      const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+      console.log('[CLIENT] Stripe redirect result:', result);
+      
+      if (result.error) {
+        console.error('[CLIENT] Stripe redirect error:', result.error);
+        alert('Stripe redirect error: ' + result.error.message);
+      }
     } else {
       // Get detailed error from response
       const errorData = await response.json();
-      console.error('Checkout creation failed:', errorData);
+      console.error('[CLIENT] Checkout creation failed:', errorData);
       alert(`Error: ${errorData.message || errorData.error}\n\nType: ${errorData.type || 'Unknown'}\nCode: ${errorData.code || 'Unknown'}\n\nCheck console for more details.`);
     }
   } catch (error) {
-    console.error('Upgrade failed:', error);
-    alert('An unexpected error occurred. Please try again later.');
+    console.error('[CLIENT] Upgrade failed with exception:', error);
+    console.error('[CLIENT] Error stack:', error.stack);
+    alert('An unexpected error occurred. Please try again later.\n\nError: ' + error.message);
   }
 }
 

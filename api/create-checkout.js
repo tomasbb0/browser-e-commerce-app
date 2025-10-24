@@ -47,11 +47,19 @@ module.exports = async (req, res) => {
   console.log('[STEP 4] Stripe initialized successfully');
 
   try {
+    const successUrl = `${process.env.URL}/success.html?session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = `${process.env.URL}/`;
+    
     console.log('[STEP 5] Creating checkout session with params:', {
       email,
       priceId,
-      url: process.env.URL
+      url: process.env.URL,
+      successUrl,
+      cancelUrl
     });
+    
+    console.log('[DEBUG] Full success URL:', successUrl);
+    console.log('[DEBUG] Full cancel URL:', cancelUrl);
     
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -66,8 +74,8 @@ module.exports = async (req, res) => {
       mode: 'subscription',
       automatic_tax: { enabled: true },
       allow_promotion_codes: true, // Enable promo code input
-      success_url: `${process.env.URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.URL}/`,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       metadata: {
         customer_email: email,
       },
