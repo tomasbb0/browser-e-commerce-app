@@ -26,6 +26,18 @@ function handleCredentialResponse(response) {
     document.getElementById('userName').textContent = currentUser.name;
     
     showSection('dashboard');
+    
+    // Check if returning from successful payment
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('welcome') === 'true') {
+        // Remove the parameter from URL
+        window.history.replaceState({}, document.title, '/');
+        
+        // Show welcome tutorial after a short delay
+        setTimeout(() => {
+            showWelcomeTutorial();
+        }, 500);
+    }
 }
 
 function parseJwt(token) {
@@ -537,3 +549,16 @@ async function upgradeToPremium() {
   }
 }
 
+// Welcome Tutorial Functions
+function showWelcomeTutorial() {
+  console.log('[TUTORIAL] Showing welcome tutorial');
+  document.getElementById('tutorialOverlay').classList.add('active');
+}
+
+function closeTutorial() {
+  console.log('[TUTORIAL] Closing tutorial');
+  document.getElementById('tutorialOverlay').classList.remove('active');
+  
+  // Reload user data to refresh premium status
+  loadUserData();
+}

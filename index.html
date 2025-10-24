@@ -582,6 +582,124 @@
             line-height: 1.6;
         }
 
+        /* Welcome Tutorial Modal */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        .tutorial-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tutorial-modal {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .tutorial-modal h2 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .tutorial-modal .subtitle {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .tutorial-steps {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .tutorial-step {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .tutorial-step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .tutorial-close {
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .tutorial-modal {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .tutorial-modal h2 {
+                font-size: 1.8em;
+            }
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -740,6 +858,50 @@
                 <div id="recommendations"></div>
                 <button class="btn" onclick="restartQuiz()" style="margin-top: 20px;">Start Over</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Welcome Tutorial Modal -->
+    <div id="tutorialOverlay" class="tutorial-overlay">
+        <div class="tutorial-modal">
+            <h2>🎉 Welcome to Premium!</h2>
+            <p class="subtitle">Let's guide you through the benefits your subscription gives you!</p>
+
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <div class="step-icon">💾</div>
+                    <div class="step-content">
+                        <h3>Save Unlimited Results</h3>
+                        <p>Take quizzes and save your results automatically. Access them anytime from your dashboard to track your preferences over time.</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-icon">📊</div>
+                    <div class="step-content">
+                        <h3>Compare Tools Side-by-Side</h3>
+                        <p>View detailed comparisons of browser tools to make the best decision for your team. See pros, cons, and pricing all in one place.</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-icon">✉️</div>
+                    <div class="step-content">
+                        <h3>Priority Email Support</h3>
+                        <p>Get help when you need it. Our team responds to premium members first, usually within 24 hours.</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <div class="step-icon">🚀</div>
+                    <div class="step-content">
+                        <h3>Early Access to New Features</h3>
+                        <p>Be the first to try new tools and features as we add them. Your feedback helps shape the product!</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn tutorial-close" onclick="closeTutorial()">Get Started!</button>
         </div>
     </div>
 

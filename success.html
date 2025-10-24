@@ -241,19 +241,13 @@
         
         if (sessionId) {
             document.getElementById('sessionId').textContent = sessionId;
+            
+            // Give webhook time to process (2 seconds), then redirect to tutorial
+            setTimeout(() => {
+                window.location.href = '/?welcome=true';
+            }, 2000);
         } else {
             document.getElementById('sessionInfo').style.display = 'none';
-        }
-
-        // Optional: Update user's premium status in your database here
-        // You could make an API call to update the user's subscription status
-        if (sessionId) {
-            // Example: Call your backend to update user status
-            // fetch('/api/update-subscription', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ sessionId })
-            // });
         }
     </script>
     <script type="module">
