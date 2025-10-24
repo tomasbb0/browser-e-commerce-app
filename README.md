@@ -12,12 +12,18 @@ A premium quiz application that helps startup teams find the perfect browser too
 - 🎨 Beautiful, responsive UI
 - 🎓 Interactive welcome tutorial for premium users
 - 🎁 Promo code support (FREEMONTH for 100% off first month)
+- 🤖 AI-powered code reviews with CodeRabbit
 
 ## Tech Stack
 
-- **Frontend**: HTML, CSS, Vanilla JavaScript
-- **Backend**: Vercel Functions (Node.js)
-- **Database**: PostgreSQL (Neon)
+- **Frontend**: Vanilla JavaScript, HTML5, CSS3
+- **Authentication**: Google OAuth 2.0
+- **Payments**: Stripe Checkout & Webhooks
+- **Database**: Neon PostgreSQL (serverless)
+- **Hosting**: Vercel (serverless functions)
+- **AI Code Review**: CodeRabbit
+
+## Quick Start
 - **Authentication**: Google OAuth
 - **Payments**: Stripe
 - **Hosting**: Vercel
@@ -256,6 +262,10 @@ Stripe webhook handler (called by Stripe, not directly)
 - Verify client ID in HTML matches Google Console
 - Check authorized origins include your domain
 - Clear browser cache and cookies
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
